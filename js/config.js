@@ -60,5 +60,5 @@ export const wedding = {
  * Example: 'https://wedding.example.com' (no trailing slash).
  */
 export const site = {
-  url: '',
+  url: 'https://mustafaselim01283.github.io/wedding-invitation',
 };
