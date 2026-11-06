@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Social preview source — not part of the invitation</title>
+  <style>
+    @font-face {
+      font-family: "Aref Ruqaa";
+      font-style: normal;
+      font-weight: 400;
+      src: url("fonts/aref-ruqaa-400-arabic.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Aref Ruqaa";
+      font-style: normal;
+      font-weight: 700;
+      src: url("fonts/aref-ruqaa-700-arabic.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Tajawal";
+      font-style: normal;
+      font-weight: 300;
+      src: url("fonts/tajawal-300-arabic.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Tajawal";
+      font-style: normal;
+      font-weight: 400;
+      src: url("fonts/tajawal-400-arabic.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Tajawal";
+      font-style: normal;
+      font-weight: 500;
+      src: url("fonts/tajawal-500-arabic.woff2") format("woff2");
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      width: 1200px;
+      height: 630px;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      position: relative;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(90% 100% at 50% 0%, #fcf7ed 0%, #f5eddf 60%, #efe4d1 100%);
+      color: #2b231b;
+      font-family: "Tajawal", sans-serif;
+    }
+
+    .grain {
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+    }
+
+    .frame,
+    .frame::before {
+      position: absolute;
+      border: 1px solid rgba(123, 94, 51, 0.3);
+      pointer-events: none;
+    }
+
+    .frame {
+      inset: 24px;
+    }
+
+    .frame::before {
+      content: "";
+      inset: 7px;
+      border-color: rgba(123, 94, 51, 0.12);
+    }
+
+    .arch {
+      position: absolute;
+      inset-block-start: 50%;
+      left: 50%;
+      width: 560px;
+      height: auto;
+      transform: translate(-50%, -50%);
+      color: #a8875a;
+      opacity: 0.42;
+    }
+
+    .sprig {
+      position: absolute;
+      width: 92px;
+      color: #a8875a;
+      opacity: 0.3;
+    }
+
+    .sprig--a {
+      inset-block-end: 66px;
+      inset-inline-start: 78px;
+      transform: rotate(-7deg);
+    }
+
+    .sprig--b {
+      inset-block-end: 66px;
+      inset-inline-end: 78px;
+      transform: scaleX(-1) rotate(-7deg);
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      padding: 58px 100px 54px;
+      text-align: center;
+    }
+
+    .monogram {
+      color: #7b5e33;
+      font-family: "Aref Ruqaa", serif;
+      font-size: 27px;
+      font-weight: 400;
+      line-height: 1.35;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 10px;
+      color: #7b5e33;
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      content: "";
+      width: 44px;
+      height: 1px;
+      background: linear-gradient(to left, transparent, rgba(123, 94, 51, 0.5));
+    }
+
+    .eyebrow::after {
+      background: linear-gradient(to right, transparent, rgba(123, 94, 51, 0.5));
+    }
+
+    .names {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 34px;
+      margin-top: 22px;
+      white-space: nowrap;
+    }
+
+    .name {
+      font-family: "Aref Ruqaa", serif;
+      font-size: 82px;
+      font-weight: 400;
+      line-height: 1.35;
+    }
+
+    .amp {
+      display: grid;
+      width: 52px;
+      height: 52px;
+      flex: 0 0 auto;
+      place-items: center;
+      border: 1px solid rgba(123, 94, 51, 0.45);
+      border-radius: 50%;
+      color: #7b5e33;
+      font-family: "Aref Ruqaa", serif;
+      font-size: 27px;
+      font-weight: 400;
+      line-height: 1;
+      transform: translateY(-4px);
+    }
+
+    .divider {
+      width: 310px;
+      height: 22px;
+      margin-top: 22px;
+      color: #a8875a;
+    }
+
+    .date {
+      margin-top: 16px;
+      color: #7b5e33;
+      font-family: "Tajawal", sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.7;
+    }
+
+    .city {
+      margin-top: 2px;
+      color: #6d5f50;
+      font-size: 21px;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    .footer {
+      position: absolute;
+      inset-block-end: 42px;
+      inset-inline: 0;
+      color: rgba(123, 94, 51, 0.62);
+      font-size: 14px;
+      font-weight: 400;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="grain"></div>
+  <div class="frame"></div>
+
+  <svg class="arch" viewBox="0 0 640 900" aria-hidden="true">
+    <defs>
+      <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#a8875a" stop-opacity=".9"/>
+        <stop offset=".7" stop-color="#a8875a" stop-opacity=".35"/>
+        <stop offset="1" stop-color="#a8875a" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+    <g fill="none" stroke="url(#fade)" stroke-linecap="round">
+      <path d="M70 880V350C70 210 160 116 320 30c160 86 250 180 250 320v530"/>
+      <path d="M92 880V356C92 228 174 140 320 62c146 78 228 166 228 294v524" opacity=".5"/>
+    </g>
+    <g fill="none" stroke="#a8875a" stroke-width="1" opacity=".85">
+      <path d="M320 8l4 11 11 4-11 4-4 11-4-11-11-4 11-4z" fill="#a8875a" stroke="none"/>
+      <circle cx="320" cy="42" r="1.6" fill="#a8875a"/>
+    </g>
+  </svg>
+
+  <svg class="sprig sprig--a" viewBox="0 0 100 224" aria-hidden="true">
+    <g fill="none" stroke="#a8875a" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M50 216C46 166 52 96 74 22"/>
+      <path d="M54 188c-16 4-28-2-35-17 15-4 28 2 35 17Z"/>
+      <path d="M58 160c14 0 25-8 29-23-16 0-27 8-29 23Z"/>
+      <path d="M62 133c-14 3-24-3-30-16 14-3 26 2 30 16Z"/>
+      <path d="M66 108c12-1 21-9 24-22-14 0-23 8-24 22Z"/>
+      <path d="M69 86c-11 2-20-3-24-14 12-2 21 2 24 14Z"/>
+      <path d="M72 64c10-2 17-8 19-18-11-1-18 6-19 18Z"/>
+      <path d="M73 44c-9 2-16-2-19-11 9-2 17 1 19 11Z"/>
+      <circle cx="74" cy="22" r="2.2"/>
+    </g>
+  </svg>
+
+  <svg class="sprig sprig--b" viewBox="0 0 100 224" aria-hidden="true">
+    <g fill="none" stroke="#a8875a" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M50 216C46 166 52 96 74 22"/>
+      <path d="M54 188c-16 4-28-2-35-17 15-4 28 2 35 17Z"/>
+      <path d="M58 160c14 0 25-8 29-23-16 0-27 8-29 23Z"/>
+      <path d="M62 133c-14 3-24-3-30-16 14-3 26 2 30 16Z"/>
+      <path d="M66 108c12-1 21-9 24-22-14 0-23 8-24 22Z"/>
+      <path d="M69 86c-11 2-20-3-24-14 12-2 21 2 24 14Z"/>
+      <path d="M72 64c10-2 17-8 19-18-11-1-18 6-19 18Z"/>
+      <path d="M73 44c-9 2-16-2-19-11 9-2 17 1 19 11Z"/>
+      <circle cx="74" cy="22" r="2.2"/>
+    </g>
+  </svg>
+
+  <div class="content">
+    <p class="monogram" data-og="monogram">ع · ن</p>
+    <p class="eyebrow">بكل الحب والفرح</p>
+    <div class="names">
+      <span class="name" data-og="groom">عبدالله باجري</span>
+      <span class="amp">و</span>
+      <span class="name" data-og="bride">نور باوزير</span>
+    </div>
+
+    <svg class="divider" viewBox="0 0 240 32" aria-hidden="true">
+      <g fill="none" stroke="#a8875a" stroke-width="1" stroke-linecap="round">
+        <path d="M4 16h74"/>
+        <path d="M162 16h74"/>
+        <path d="M84 16c4-5 9-5 13 0-4 5-9 5-13 0Z"/>
+        <path d="M143 16c4-5 9-5 13 0-4 5-9 5-13 0Z"/>
+        <path d="M120 5.5l3 7.5 7.5 3-7.5 3-3 7.5-3-7.5-7.5-3 7.5-3z"/>
+        <circle cx="120" cy="16" r="1.5" fill="#a8875a" stroke="none"/>
+      </g>
+    </svg>
+
+    <p class="date" data-og="date">الثلاثاء ٢٤ نوفمبر ٢٠٢٦ · ٨:٠٠ م</p>
+    <p class="city" data-og="city">اليمن</p>
+  </div>
+
+  <p class="footer">دعوة زفاف</p>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "دعوة زفاف عبدالله باجري ونور باوزير",
+  "short_name": "دعوة زفاف",
+  "description": "بكل الحب والفرح، نتشرف بدعوتكم لحضور حفل زواج عبدالله باجري ونور باوزير. الثلاثاء ٢٤ نوفمبر ٢٠٢٦، ٨:٠٠ م — اليمن.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f1e6",
+  "theme_color": "#f7f1e6",
+  "icons": [
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
