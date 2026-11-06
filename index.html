@@ -317,13 +317,8 @@
     <!-- STATE 2 — opened two-page booklet ─────────────────────────────── -->
     <section class="booklet" id="booklet" aria-hidden="true" inert>
       <div class="booklet__shell">
-        <div class="booklet__tabs" role="group" aria-label="التنقل بين صفحات الدعوة">
-          <button class="view-tab is-active" type="button" data-view="invitation" aria-controls="page-invitation" aria-pressed="true">الدعوة</button>
-          <button class="view-tab" type="button" data-view="details" aria-controls="page-details" aria-pressed="false">تفاصيل الحفل</button>
-        </div>
-
         <div class="booklet__clip">
-          <div class="booklet__spread" data-view="invitation">
+          <div class="booklet__spread">
             <article class="page page--invitation" id="page-invitation" tabindex="-1" aria-label="الدعوة">
               <div class="page__frame" aria-hidden="true"></div>
               <svg class="page__arch" viewBox="0 0 640 900" aria-hidden="true" focusable="false"><use href="#ornament-arch"/></svg>
@@ -361,6 +356,15 @@
                 </div>
               </div>
             </article>
+
+            <div class="flow-cue" data-flow-cue>
+              <button class="flow-cue__button" type="button" data-scroll-details aria-controls="page-details" aria-label="الانتقال إلى تفاصيل الحفل">
+                <svg class="flow-cue__chevron" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M5.5 9.5 12 16l6.5-6.5"/>
+                </svg>
+              </button>
+              <span class="flow-cue__hint" data-flow-hint aria-hidden="true">تفاصيل الحفل</span>
+            </div>
 
             <article class="page page--details" id="page-details" tabindex="-1" aria-label="تفاصيل الحفل">
               <div class="page__frame" aria-hidden="true"></div>

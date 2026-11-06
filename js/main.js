@@ -3,7 +3,8 @@
  *
  * Two states:
  *   1. a closed envelope, opened only by an explicit user action;
- *   2. a two-page booklet on desktop / a switchable portrait card on mobile.
+ *   2. a two-page booklet on desktop / a continuous scrollable invitation
+ *      and details flow on mobile.
  */
 
 import { site, wedding } from './config.js';
@@ -133,9 +134,7 @@ function initialiseExperience() {
   };
 
   const focusOpenedState = () => {
-    const target = compactQuery.matches
-      ? select(`.view-tab[data-view="${currentView}"]`)
-      : select('#page-invitation');
+    const target = select('#page-invitation');
     window.requestAnimationFrame(() => {
       target?.focus({ preventScroll: true });
     });
@@ -147,7 +146,7 @@ function initialiseExperience() {
     booklet.removeAttribute('aria-hidden');
     experience.classList.add('is-finished');
     experience.removeAttribute('aria-busy');
-    applyView(currentView);
+    experience.scrollTop = 0;
     focusOpenedState();
   };
 
@@ -201,63 +200,65 @@ function initialiseExperience() {
   window.setTimeout(() => {
     if (!opened) envelopeButton?.focus({ preventScroll: true });
   }, 500);
-
-  applyView(currentView);
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
-   Mobile / desktop view switching
+   Mobile scroll flow
    ────────────────────────────────────────────────────────────────────────── */
 
-let currentView = 'invitation';
+function initialiseMobileFlow() {
+  const cue = select('[data-scroll-details]');
+  const cueWrap = select('[data-flow-cue]');
+  const details = select('#page-details');
+  const experience = select('#experience');
+  if (!cue || !details) return;
 
-function applyView(view, { focus = false } = {}) {
-  const booklet = select('#booklet');
-  if (!booklet) return;
-  if (view !== 'invitation' && view !== 'details') return;
+  const revealDetails = () => {
+    details.scrollIntoView({
+      behavior: reduceMotion.matches ? 'auto' : 'smooth',
+      block: 'start',
+    });
+    details.focus({ preventScroll: true });
+  };
 
-  currentView = view;
-  booklet.dataset.view = view;
-
-  const tabs = selectAll('.view-tab');
-  tabs.forEach((tab) => {
-    const active = tab.dataset.view === view;
-    tab.classList.toggle('is-active', active);
-    tab.setAttribute('aria-pressed', String(active));
-  });
-
-  const invitationPage = select('#page-invitation');
-  const detailsPage = select('#page-details');
-  const compact = compactQuery.matches;
-
-  const pages = [
-    [invitationPage, 'invitation'],
-    [detailsPage, 'details'],
-  ];
-
-  pages.forEach(([page, key]) => {
-    if (!page) return;
-    if (compact) {
-      const active = key === view;
-      page.toggleAttribute('inert', !active);
-      if (active) page.removeAttribute('aria-hidden');
-      else page.setAttribute('aria-hidden', 'true');
-    } else {
-      page.removeAttribute('inert');
-      page.removeAttribute('aria-hidden');
+  let frame = 0;
+  const updateCue = () => {
+    frame = 0;
+    const reached = details.getBoundingClientRect().top <= window.innerHeight * 0.55;
+    cueWrap?.classList.toggle('is-hidden', reached);
+    cue.setAttribute('aria-hidden', String(reached));
+    cue.tabIndex = reached ? -1 : 0;
+    if (reached && cueWrap?.contains(document.activeElement)) {
+      details.focus({ preventScroll: true });
     }
+  };
+  const scheduleCueUpdate = () => {
+    if (frame) return;
+    frame = window.requestAnimationFrame(updateCue);
+  };
+
+  cue.addEventListener('click', revealDetails);
+  cue.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ' && event.key !== 'Spacebar') {
+      return;
+    }
+    event.preventDefault();
+    revealDetails();
   });
 
-  const activePage = view === 'details' ? detailsPage : invitationPage;
-  const inner = activePage?.querySelector('.page__inner');
-  if (inner) inner.scrollTop = 0;
+  experience?.addEventListener('scroll', scheduleCueUpdate, { passive: true });
+  window.addEventListener('resize', scheduleCueUpdate);
+  updateCue();
+}
 
-  if (focus) {
-    const target = compact
-      ? select(`.view-tab[data-view="${view}"]`)
-      : activePage;
-    target?.focus({ preventScroll: true });
-  }
+function resetViewportState() {
+  const experience = select('#experience');
+  ['#page-invitation', '#page-details'].forEach((selector) => {
+    const page = select(selector);
+    page?.removeAttribute('inert');
+    page?.removeAttribute('aria-hidden');
+  });
+  if (experience && !compactQuery.matches) experience.scrollTop = 0;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -498,10 +499,8 @@ function init() {
   initialiseSharing();
   initialiseCalendar();
   initialiseExperience();
-  compactQuery.addEventListener('change', () => applyView(currentView));
-  selectAll('.view-tab').forEach((tab) => {
-    tab.addEventListener('click', () => applyView(tab.dataset.view));
-  });
+  initialiseMobileFlow();
+  compactQuery.addEventListener('change', resetViewportState);
   root.setAttribute('data-ready', '');
 }
 
